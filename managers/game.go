@@ -11,12 +11,14 @@ import (
 )
 
 func Game() {
-	setupPallets()
+	pallets := setupPallets()
 	setupBall()
 	setupUI()
+
+	InitPlayer(pallets[0])
 }
 
-func setupPallets() {
+func setupPallets() []*objects.Pallet {
 	pw := 50
 	ph := 200
 	off := 10
@@ -35,8 +37,10 @@ func setupPallets() {
 	pr2.PosX = values.SCREEN_SIZE.X - pw - off
 	pr2.PosY = (values.SCREEN_SIZE.Y / 2) - (ph / 2)
 
-	objects.NewPallet(pr1, render.White)
-	objects.NewPallet(pr2, render.White)
+	p1 := objects.NewPallet(pr1, render.White) // Player Pallet
+	p2 := objects.NewPallet(pr2, render.White) // AI
+
+	return []*objects.Pallet{p1, p2}
 }
 
 func setupBall() {
