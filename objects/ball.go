@@ -6,24 +6,24 @@ import (
 	"github.com/mikabrytu/gomes-engine/utils"
 )
 
-type Pallet struct {
+type Ball struct {
 	rect  utils.RectSpecs
 	color render.Color
 }
 
-func NewPallet(rect utils.RectSpecs, color render.Color) *Pallet {
-	pallet := &Pallet{
+func NewBall(rect utils.RectSpecs, color render.Color) *Ball {
+	ball := &Ball{
 		rect:  rect,
 		color: color,
 	}
 
 	lifecycle.Register(lifecycle.GameObject{
-		Render: pallet.render,
+		Render: ball.render,
 	})
 
-	return pallet
+	return ball
 }
 
-func (p *Pallet) render() {
-	render.DrawSimpleShapes(p.rect, p.color)
+func (b *Ball) render() {
+	render.DrawSimpleShapes(b.rect, b.color)
 }

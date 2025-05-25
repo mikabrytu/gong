@@ -4,7 +4,6 @@ import (
 	"littlejumbo/gong/objects"
 	"littlejumbo/gong/values"
 
-	"github.com/mikabrytu/gomes-engine/lifecycle"
 	"github.com/mikabrytu/gomes-engine/math"
 	"github.com/mikabrytu/gomes-engine/render"
 	"github.com/mikabrytu/gomes-engine/ui"
@@ -48,11 +47,7 @@ func setupBall() {
 		Height: 50,
 	}
 
-	lifecycle.Register(lifecycle.GameObject{
-		Render: func() {
-			render.DrawSimpleShapes(rect, render.White)
-		},
-	})
+	objects.NewBall(rect, render.White)
 }
 
 func setupUI() {
