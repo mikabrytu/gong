@@ -1,6 +1,8 @@
 package objects
 
 import (
+	"littlejumbo/gong/values"
+
 	"github.com/mikabrytu/gomes-engine/lifecycle"
 	"github.com/mikabrytu/gomes-engine/physics"
 	"github.com/mikabrytu/gomes-engine/render"
@@ -35,7 +37,9 @@ func NewPallet(name string, rect utils.RectSpecs, color render.Color) *Pallet {
 }
 
 func (p *Pallet) Move() {
-	p.moving = true
+	if p.canMove() {
+		p.moving = true
+	}
 }
 
 func (p *Pallet) Stop() {
@@ -62,4 +66,16 @@ func (p *Pallet) physics() {
 
 func (p *Pallet) render() {
 	render.DrawSimpleShapes(p.rect, p.color)
+}
+
+func (p *Pallet) canMove() bool {
+	if (p.rect.PosY + p.rect.Height) >= values.PALLET_BOUNDARIES.Y {
+		return false
+	}
+
+	if p.rect.PosY <= values.PALLET_BOUNDARIES.X {
+		return false
+	}
+
+	return true
 }

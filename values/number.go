@@ -7,4 +7,8 @@ var (
 		X: 800,
 		Y: 600,
 	}
+	PALLET_BOUNDARIES = math.Vector2{
+		X: 100,
+		Y: 580,
+	}
 )

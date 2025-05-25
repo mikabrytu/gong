@@ -13,13 +13,13 @@ const (
 	S
 )
 
-var pallet *objects.Pallet
+var playerPallet *objects.Pallet
 
 const SPEED = 5
 
 func InitPlayer(p *objects.Pallet) {
-	pallet = p
-	pallet.SetSpeed(SPEED)
+	playerPallet = p
+	playerPallet.SetSpeed(SPEED)
 
 	playerEvents()
 }
@@ -56,10 +56,10 @@ func onKeyPressed(key Key) {
 		d = 1
 	}
 
-	pallet.SetDirection(d)
-	pallet.Move()
+	playerPallet.SetDirection(d)
+	playerPallet.Move()
 }
 
 func onKeyReleased() {
-	pallet.Stop()
+	playerPallet.Stop()
 }

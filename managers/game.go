@@ -23,6 +23,7 @@ func Game() {
 
 	InitScore()
 	InitPlayer(pallets[0])
+	InitAI(pallets[1])
 }
 
 func Reset() {
@@ -80,7 +81,7 @@ func setupUI() {
 	s1.RenderText("0", render.White, math.Vector2{})
 	s2.RenderText("0", render.White, math.Vector2{})
 
-	offset := math.Vector2{X: 25, Y: 10}
+	offset := math.Vector2{X: values.SCREEN_SIZE.X / 4, Y: 10}
 	s1.AlignText(ui.TopLeft, offset)
 	s2.AlignText(ui.TopRight, offset)
 }
