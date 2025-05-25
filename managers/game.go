@@ -51,7 +51,8 @@ func setupBall() {
 		Height: 50,
 	}
 
-	objects.NewBall(rect, render.White)
+	ball := objects.NewBall(rect, render.White)
+	ball.SetScreenSize(values.SCREEN_SIZE)
 }
 
 func setupUI() {
