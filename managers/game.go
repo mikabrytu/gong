@@ -1,21 +1,33 @@
 package managers
 
 import (
+	"fmt"
 	"littlejumbo/gong/objects"
 	"littlejumbo/gong/values"
 
+	"github.com/mikabrytu/gomes-engine/events"
 	"github.com/mikabrytu/gomes-engine/math"
 	"github.com/mikabrytu/gomes-engine/render"
 	"github.com/mikabrytu/gomes-engine/ui"
 	"github.com/mikabrytu/gomes-engine/utils"
 )
 
+var ball *objects.Ball
+
 func Game() {
 	pallets := setupPallets()
 	setupBall()
 	setupUI()
 
+	gameEvents()
+
+	InitScore()
 	InitPlayer(pallets[0])
+}
+
+func Reset() {
+	ball.Reset()
+	fmt.Printf("Score -> Human: %v | Computer: %v\n", GetHumanScore(), GetComputerScore())
 }
 
 func setupPallets() []*objects.Pallet {
@@ -51,7 +63,7 @@ func setupBall() {
 		Height: 50,
 	}
 
-	ball := objects.NewBall(rect, render.White)
+	ball = objects.NewBall(rect, render.White)
 	ball.SetScreenSize(values.SCREEN_SIZE)
 }
 
@@ -71,4 +83,26 @@ func setupUI() {
 	offset := math.Vector2{X: 25, Y: 10}
 	s1.AlignText(ui.TopLeft, offset)
 	s2.AlignText(ui.TopRight, offset)
+}
+
+func gameEvents() {
+	events.Subscribe(values.SCORE_PLAYER, func(params ...any) error {
+		onPlayerScore()
+		return nil
+	})
+
+	events.Subscribe(values.SCORE_COMPUTER, func(params ...any) error {
+		onComputerScore()
+		return nil
+	})
+}
+
+func onPlayerScore() {
+	AddScore(Human)
+	Reset()
+}
+
+func onComputerScore() {
+	AddScore(Computer)
+	Reset()
 }

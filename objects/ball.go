@@ -1,9 +1,9 @@
 package objects
 
 import (
-	"fmt"
 	"littlejumbo/gong/values"
 
+	"github.com/mikabrytu/gomes-engine/events"
 	"github.com/mikabrytu/gomes-engine/lifecycle"
 	"github.com/mikabrytu/gomes-engine/math"
 	"github.com/mikabrytu/gomes-engine/physics"
@@ -39,6 +39,14 @@ func NewBall(rect utils.RectSpecs, color render.Color) *Ball {
 	})
 
 	return ball
+}
+
+func (b *Ball) Reset() {
+	b.rect.PosX = (b.screen.X / 2) - (b.rect.Width / 2)
+	b.rect.PosY = (b.screen.Y / 2) - (b.rect.Height / 2)
+	b.direction.X *= -1
+	b.direction.Y = 0
+	b.speed = INITIAL_SPEED
 }
 
 func (b *Ball) SetScreenSize(size math.Vector2) {
@@ -78,11 +86,8 @@ func checkCollision(b *Ball) {
 				b.direction.X = -1
 			}
 
-			// Check both midpoints to set angle
 			bMidY := body.Rect.PosY + (body.Rect.Height / 2)
 			cMidY := collider.Rect.PosY + (collider.Rect.Height / 2)
-
-			fmt.Printf("Pallet midpoint: %v | Ball midpoint: %v\n", cMidY, bMidY)
 
 			if cMidY == bMidY {
 				b.direction.Y = 0
@@ -100,19 +105,19 @@ func checkCollision(b *Ball) {
 }
 
 func checkScreenBoundaries(b *Ball) {
-	if b.rect.PosX < 0 {
-		b.direction.X = 1
-	}
-
-	if (b.rect.PosX + b.rect.Width) > b.screen.X {
-		b.direction.X = -1
-	}
-
 	if b.rect.PosY < 0 {
 		b.direction.Y = 1
 	}
 
 	if (b.rect.PosY + b.rect.Height) > b.screen.Y {
 		b.direction.Y = -1
+	}
+
+	if (b.rect.PosX + b.rect.Width) < 0 {
+		events.Emit(values.SCORE_COMPUTER)
+	}
+
+	if b.rect.PosX > values.SCREEN_SIZE.X {
+		events.Emit(values.SCORE_PLAYER)
 	}
 }

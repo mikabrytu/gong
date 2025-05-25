@@ -21,10 +21,10 @@ func InitPlayer(p *objects.Pallet) {
 	pallet = p
 	pallet.SetSpeed(SPEED)
 
-	setupListeners()
+	playerEvents()
 }
 
-func setupListeners() {
+func playerEvents() {
 	events.Subscribe(events.INPUT_KEYBOARD_PRESSED_W, func(params ...any) error {
 		onKeyPressed(W)
 		return nil
