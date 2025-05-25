@@ -2,27 +2,31 @@ package objects
 
 import (
 	"github.com/mikabrytu/gomes-engine/lifecycle"
+	"github.com/mikabrytu/gomes-engine/physics"
 	"github.com/mikabrytu/gomes-engine/render"
 	"github.com/mikabrytu/gomes-engine/utils"
 )
 
 type Pallet struct {
-	Rect      utils.RectSpecs
+	name      string
+	rect      utils.RectSpecs
 	color     render.Color
 	direction int
 	speed     int
 	moving    bool
 }
 
-func NewPallet(rect utils.RectSpecs, color render.Color) *Pallet {
+func NewPallet(name string, rect utils.RectSpecs, color render.Color) *Pallet {
 	pallet := &Pallet{
-		Rect:      rect,
+		name:      name,
+		rect:      rect,
 		color:     color,
 		direction: 0,
 		speed:     0,
 	}
 
 	lifecycle.Register(lifecycle.GameObject{
+		Start:   pallet.start,
 		Physics: pallet.physics,
 		Render:  pallet.render,
 	})
@@ -46,12 +50,16 @@ func (p *Pallet) SetSpeed(speed int) {
 	p.speed = speed
 }
 
+func (p *Pallet) start() {
+	physics.RegisterBody(&p.rect, p.name)
+}
+
 func (p *Pallet) physics() {
 	if p.moving {
-		p.Rect.PosY += p.speed * p.direction
+		p.rect.PosY += p.speed * p.direction
 	}
 }
 
 func (p *Pallet) render() {
-	render.DrawSimpleShapes(p.Rect, p.color)
+	render.DrawSimpleShapes(p.rect, p.color)
 }

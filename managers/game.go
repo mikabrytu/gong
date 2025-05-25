@@ -37,8 +37,8 @@ func setupPallets() []*objects.Pallet {
 	pr2.PosX = values.SCREEN_SIZE.X - pw - off
 	pr2.PosY = (values.SCREEN_SIZE.Y / 2) - (ph / 2)
 
-	p1 := objects.NewPallet(pr1, render.White) // Player Pallet
-	p2 := objects.NewPallet(pr2, render.White) // AI
+	p1 := objects.NewPallet(values.OBJECT_PALLET_PLAYER, pr1, render.White)
+	p2 := objects.NewPallet(values.OBJECT_PALLET_COMPUTER, pr2, render.White)
 
 	return []*objects.Pallet{p1, p2}
 }

@@ -47,8 +47,6 @@ func setupListeners() {
 }
 
 func onKeyPressed(key Key) {
-	println("Key Pressed")
-
 	d := 0
 
 	if key == W {
@@ -63,6 +61,5 @@ func onKeyPressed(key Key) {
 }
 
 func onKeyReleased() {
-	println("KEY RELEASED")
 	pallet.Stop()
 }
