@@ -37,9 +37,7 @@ func NewPallet(name string, rect utils.RectSpecs, color render.Color) *Pallet {
 }
 
 func (p *Pallet) Move() {
-	if p.canMove() {
-		p.moving = true
-	}
+	p.moving = true
 }
 
 func (p *Pallet) Stop() {
@@ -60,6 +58,10 @@ func (p *Pallet) start() {
 
 func (p *Pallet) physics() {
 	if p.moving {
+		if !p.canMove() {
+			return
+		}
+
 		p.rect.PosY += p.speed * p.direction
 	}
 }
@@ -69,11 +71,11 @@ func (p *Pallet) render() {
 }
 
 func (p *Pallet) canMove() bool {
-	if (p.rect.PosY + p.rect.Height) >= values.PALLET_BOUNDARIES.Y {
+	if (p.rect.PosY+p.rect.Height) >= values.PALLET_BOUNDARIES.Y && p.direction == 1 {
 		return false
 	}
 
-	if p.rect.PosY <= values.PALLET_BOUNDARIES.X {
+	if p.rect.PosY <= values.PALLET_BOUNDARIES.X && p.direction == -1 {
 		return false
 	}
 
