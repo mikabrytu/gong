@@ -3,6 +3,7 @@ package objects
 import (
 	"littlejumbo/gong/values"
 
+	"github.com/mikabrytu/gomes-engine/events"
 	"github.com/mikabrytu/gomes-engine/lifecycle"
 	"github.com/mikabrytu/gomes-engine/physics"
 	"github.com/mikabrytu/gomes-engine/render"
@@ -44,6 +45,10 @@ func (p *Pallet) Stop() {
 	p.moving = false
 }
 
+func (p *Pallet) InvertDirection() {
+	p.direction *= -1
+}
+
 func (p *Pallet) SetDirection(direction int) {
 	p.direction = direction
 }
@@ -72,10 +77,12 @@ func (p *Pallet) render() {
 
 func (p *Pallet) canMove() bool {
 	if (p.rect.PosY+p.rect.Height) >= values.PALLET_BOUNDARIES.Y && p.direction == 1 {
+		events.Emit(values.PALLET_MOVE_LIMIT_DOWN, p)
 		return false
 	}
 
 	if p.rect.PosY <= values.PALLET_BOUNDARIES.X && p.direction == -1 {
+		events.Emit(values.PALLET_MOVE_LIMIT_UP, p)
 		return false
 	}
 

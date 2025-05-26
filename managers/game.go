@@ -1,7 +1,6 @@
 package managers
 
 import (
-	"fmt"
 	"littlejumbo/gong/objects"
 	"littlejumbo/gong/values"
 
@@ -27,8 +26,9 @@ func Game() {
 }
 
 func Reset() {
+	events.Emit(values.GAME_RESET)
 	ball.Reset()
-	fmt.Printf("Score -> Human: %v | Computer: %v\n", GetHumanScore(), GetComputerScore())
+	//fmt.Printf("Score -> Human: %v | Computer: %v\n", GetHumanScore(), GetComputerScore())
 }
 
 func setupPallets() []*objects.Pallet {

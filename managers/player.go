@@ -15,7 +15,7 @@ const (
 
 var playerPallet *objects.Pallet
 
-const SPEED = 5
+const SPEED = 10
 
 func InitPlayer(p *objects.Pallet) {
 	playerPallet = p

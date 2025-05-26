@@ -49,6 +49,10 @@ func (b *Ball) Reset() {
 	b.speed = INITIAL_SPEED
 }
 
+func (b *Ball) SetSpeed(speed int) {
+	b.speed = speed
+}
+
 func (b *Ball) SetScreenSize(size math.Vector2) {
 	b.screen = size
 }
@@ -78,6 +82,8 @@ func checkCollision(b *Ball) {
 	if body.Name != "nil" {
 		collider := physics.CheckCollision(body)
 		if collider.Name != "nil" {
+			events.Emit(values.BALL_COLLISION_PALLET)
+
 			if collider.Rect.PosX < body.Rect.PosX {
 				b.direction.X = 1
 			}
