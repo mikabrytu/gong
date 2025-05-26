@@ -32,7 +32,7 @@ func Reset() {
 }
 
 func setupPallets() []*objects.Pallet {
-	pw := 50
+	pw := 40
 	ph := 200
 	off := 10
 	rect := utils.RectSpecs{
@@ -57,11 +57,12 @@ func setupPallets() []*objects.Pallet {
 }
 
 func setupBall() {
+	s := 30
 	rect := utils.RectSpecs{
-		PosX:   (values.SCREEN_SIZE.X / 2) - 25,
-		PosY:   (values.SCREEN_SIZE.Y / 2) - 25,
-		Width:  50,
-		Height: 50,
+		PosX:   (values.SCREEN_SIZE.X / 2) - (s / 2),
+		PosY:   (values.SCREEN_SIZE.Y / 2) - (s / 2),
+		Width:  s,
+		Height: s,
 	}
 
 	ball = objects.NewBall(rect, render.White)
