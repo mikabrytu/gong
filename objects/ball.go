@@ -97,6 +97,7 @@ func checkCollision(b *Ball) {
 
 			if cMidY == bMidY {
 				b.direction.Y = 0
+				b.speed = INITIAL_SPEED * 2
 			}
 
 			if cMidY < bMidY {
