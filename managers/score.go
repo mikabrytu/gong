@@ -1,5 +1,11 @@
 package managers
 
+import (
+	"fmt"
+
+	"github.com/mikabrytu/gomes-engine/ui"
+)
+
 type Player int
 
 const (
@@ -7,27 +13,31 @@ const (
 	Computer
 )
 
-var playerScore, computerScore int
+var textPlayer, textComputer *ui.Font
+var countPlayer, countComputer int
 
-func InitScore() {
-	playerScore = 0
-	computerScore = 0
+func InitScore(tPlayer, tComputer *ui.Font) {
+	textPlayer = tPlayer
+	textComputer = tComputer
+	countPlayer = 0
+	countComputer = 0
 }
 
 func AddScore(player Player) {
 	if player == Human {
-		playerScore++
+		countPlayer++
+		textPlayer.UpdateText(fmt.Sprintf("%v", countPlayer))
 	}
 
 	if player == Computer {
-		computerScore++
+		countComputer++
 	}
 }
 
 func GetHumanScore() int {
-	return playerScore
+	return countPlayer
 }
 
 func GetComputerScore() int {
-	return computerScore
+	return countComputer
 }

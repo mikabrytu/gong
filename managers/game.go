@@ -15,12 +15,12 @@ var ball *objects.Ball
 
 func Game() {
 	pallets := setupPallets()
+	scores := setupUI()
 	setupBall()
-	setupUI()
 
 	gameEvents()
 
-	InitScore()
+	InitScore(scores[0], scores[1])
 	InitPlayer(pallets[0])
 	InitAI(pallets[1])
 }
@@ -28,7 +28,6 @@ func Game() {
 func Reset() {
 	events.Emit(values.GAME_RESET)
 	ball.Reset()
-	//fmt.Printf("Score -> Human: %v | Computer: %v\n", GetHumanScore(), GetComputerScore())
 }
 
 func setupPallets() []*objects.Pallet {
@@ -69,7 +68,7 @@ func setupBall() {
 	ball.SetScreenSize(values.SCREEN_SIZE)
 }
 
-func setupUI() {
+func setupUI() []*ui.Font {
 	font := ui.FontSpecs{
 		Name: "CutePixel",
 		Path: "assets/font/CutePixel.ttf",
@@ -79,12 +78,14 @@ func setupUI() {
 	s1 := ui.NewFont(font, values.SCREEN_SIZE)
 	s2 := ui.NewFont(font, values.SCREEN_SIZE)
 
-	s1.RenderText("0", render.White, math.Vector2{})
-	s2.RenderText("0", render.White, math.Vector2{})
+	s1.Init("0", render.White, math.Vector2{})
+	s2.Init("0", render.White, math.Vector2{})
 
 	offset := math.Vector2{X: values.SCREEN_SIZE.X / 4, Y: 10}
 	s1.AlignText(ui.TopLeft, offset)
 	s2.AlignText(ui.TopRight, offset)
+
+	return []*ui.Font{s1, s2}
 }
 
 func gameEvents() {
