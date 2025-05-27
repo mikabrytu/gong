@@ -31,6 +31,7 @@ func AddScore(player Player) {
 
 	if player == Computer {
 		countComputer++
+		textComputer.UpdateText(fmt.Sprintf("%v", countComputer))
 	}
 }
 
